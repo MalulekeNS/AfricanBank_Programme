@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Company Data Room</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('wp3519537.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    .top-buttons {
+      padding: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-buttons a {
+      background-color: #2e7d32;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .top-buttons a:hover {
+      background-color: #1b5e20;
+    }
+
+    .container {
+      margin: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .category {
+      margin-bottom: 20px;
+    }
+
+    .category h2 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .file-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .file-list li {
+      background-color: white;
+      color: black;
+      margin-bottom: 8px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .file-list li button {
+      background-color: #2e7d32;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .file-list li button:hover {
+      background-color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-buttons">
+    <a href="index.php"><i class="fas fa-home"></i> Home</a>
+    <a href="data_room_companies.html"><i class="fas fa-arrow-left"></i> Back to Company List</a>
+  </div>
+
+  <div class="container">
+    <h1 id="companyTitle">Company Name</h1>
+    
+    <div class="category">
+      <h2>📁 Business Plan</h2>
+      <ul class="file-list">
+        <li>
+          2024 Summary.pdf
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+        <li>
+          Q1 Budget.xlsx
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <h2>📁 Financial Reports</h2>
+      <ul class="file-list">
+        <li>
+          2024 Summary.pdf
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+        <li>
+          Q1 Budget.xlsx
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+<div class="category">
+      <h2>📁 Market Strategy</h2>
+      <ul class="file-list">
+        <li>
+          2024 Summary.pdf
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+        <li>
+          Q1 Budget.xlsx
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="category">
+      <h2>📁 Compliance</h2>
+      <ul class="file-list">
+        <li>
+          BEE Certificate.pdf
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+        <li>
+          SARS Letter.pdf
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <h2>📁 HR Files</h2>
+      <ul class="file-list">
+        <li>
+          Leave Policy.docx
+          <div>
+            <button>View</button>
+            <button>Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Extract company name from URL
+    const params = new URLSearchParams(window.location.search);
+    const companyName = params.get('name') || 'Unknown Company';
+    document.getElementById('companyTitle').textContent = companyName + ' - Data Room';
+  </script>
+
+</body>
+</html>

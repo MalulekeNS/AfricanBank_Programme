@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Company Report Dashboard</title>
+  <!-- CDN for Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('wp3519537.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: rgba(0, 70, 20, 0.85);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .sidebar button:hover {
+      background-color: #1b5e20;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+.chart-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  color: black;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* slight 3D effect */
+}
+
+    .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .action-buttons a {
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .action-buttons a:hover {
+      background-color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button onclick="loadReport('annual')">Annual Reports</button>
+    <button onclick="loadReport('quarterly')">Quarterly Reports</button>
+    <button onclick="loadReport('monthly')">Monthly Reports</button>
+    <button onclick="loadReport('live')">Live Data</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content" id="reportContent">
+    <h2>Welcome to Company Report Dashboard</h2>
+    <p>Select a report from the sidebar to begin.</p>
+  </div>
+
+  <script>
+    function loadReport(type) {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = `
+        <h2>${type.charAt(0).toUpperCase() + type.slice(1)} Report</h2>
+
+        <div class="chart-container">
+          <canvas id="chart1"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart2"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart3"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart4"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart5"></canvas>
+        </div>
+
+        <div class="action-buttons">
+          <a href="#">View</a>
+          <a href="#">Download</a>
+        </div>
+      `;
+
+      renderCharts();
+    }
+
+    function renderCharts() {
+  for (let i = 1; i <= 5; i++) {
+    const ctx = document.getElementById(`chart${i}`).getContext('2d');
+
+    const type = i % 2 === 0 ? 'bar' : 'doughnut';
+
+    new Chart(ctx, {
+      type: type,
+      data: {
+        labels: ['A', 'B', 'C'],
+        datasets: [{
+          label: `Chart ${i}`,
+          data: [10 + i * 2, 20 + i, 30 - i],
+          backgroundColor: [
+            'rgba(43, 143, 81, 0.9)',
+            'rgba(96, 192, 101, 0.9)',
+            'rgba(148, 227, 146, 0.9)'
+          ],
+          borderWidth: type === 'bar' ? 1 : 2,
+          borderColor: '#ffffff',
+          barThickness: type === 'bar' ? 25 : undefined // make bars thinner
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#333'
+            }
+          }
+        },
+        cutout: type === 'doughnut' ? '60%' : undefined // tighter doughnut for "3D look"
+      }
+    });
+  }
+}
+
+  </script>
+
+</body>
+</html>

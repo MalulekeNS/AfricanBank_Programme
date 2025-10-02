@@ -46,12 +46,13 @@
 
     /* Content wrapper */
     .content-wrapper {
-      margin-left: 240px;
+      margin-left: 240px; /* push away from sidebar */
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     /* Top buttons */
@@ -92,8 +93,8 @@
       backdrop-filter: blur(20px);
       padding: 40px;
       border-radius: 16px;
-      max-width: 1200px;
-      width: 95%;
+      max-width: 900px;
+      width: 100%;
       text-align: center;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
     }
@@ -105,18 +106,25 @@
     }
     h2 { font-size: 28px; }
 
+    h1 {
+      cursor: pointer; /* finger pointer on hover */
+    }
+
     /* Calendar */
     .calendar-box {
       margin-bottom: 40px;
+      overflow-x: auto; /* prevent sidebar overlap */
     }
     #calendarTable {
       width: 100%;
       border-collapse: collapse;
       text-align: center;
+      table-layout: fixed; /* keeps inside wrapper */
     }
     #calendarTable th, #calendarTable td {
       padding: 10px;
       border: 1px solid rgba(255,255,255,0.2);
+      word-wrap: break-word;
     }
     #calendarTable td.today {
       background: #FFD700;

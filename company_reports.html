@@ -2,166 +2,198 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Company Reports</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Data Room - Companies</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: url('wp3519537.webp') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: white;
-  }
-
-  .top-buttons {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    gap: 15px;
-    z-index: 999;
-  }
-
-  .top-buttons button,
-    .top-buttons a {
-      background-color: #2e7d32;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
+ <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: url('bubbles.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 5px;
-      font-size: 14px;
-    }
-
-
-  .top-buttons button:hover,
-  .top-buttons a:hover {
-    background-color: #071708;
-  }
-
-  .overlay {
-    background: rgba(34, 51, 34, 0.5);
-    padding: 40px;
-    border-radius: 16px;
-    max-width: 1200px;
-    width: 95%;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-    color: white;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 40px;
-    justify-items: center;
-  }
-
-  .company-card {
-    background: #419145;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 15px 10px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 150px;
-    text-align: center;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    backdrop-filter: blur(6px);
-  }
-
-  .company-card:hover {
-    background-color: #0b240c;
-    transform: translateY(-3px);
-  }
-
-
-  @media (max-width: 1024px) {
-    .grid-container {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .grid-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .grid-container {
-      grid-template-columns: 1fr;
+      min-height: 100vh;
     }
 
     .top-buttons {
-      flex-direction: column;
-      left: 10px;
-      top: 10px;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 999;
     }
-  }
-</style>
+    .top-buttons a,
+    .top-buttons button {
+      background-color: #050808;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .top-buttons a:hover,
+    .top-buttons button:hover {
+      background-color: #D4AF37;
+      color: black;
+    }
 
+    .overlay {
+      margin-top: 100px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 1200px;
+      width: 95%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    h1, h2 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #FFD700;
+    }
+    h2 { font-size: 28px; }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      justify-items: center;
+    }
+
+    .company-card {
+      position: relative;
+      background: linear-gradient(135deg, #050808, #030736);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+      width: 100%;
+      max-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    .company-card:hover {
+      background: #D4AF37;
+      color: black;
+      transform: translateY(-3px);
+    }
+
+    /* Locked state */
+    .company-card.locked {
+      cursor: not-allowed;
+      background: linear-gradient(135deg, #0b3a7a, #030736);
+      filter: brightness(0.95);
+    }
+    .company-card.locked:hover {
+      background: linear-gradient(135deg, #0b3a7a, #030736);
+      transform: none;
+      color: white;
+    }
+
+    /* Lock badge */
+    .lock-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: rgba(0,0,0,0.9);
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .lock-badge i { color: #FFD700; }
+
+    /* Lock popup */
+    .lock-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+      display: none; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .lock-box {
+      background: linear-gradient(180deg, #001C3F, #000);
+      color: #fff; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px; width: min(420px, 92vw);
+      padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .lock-box .icon {
+      width: 64px; height: 64px; margin: 0 auto 12px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,215,0,0.12); color: #FFD700; font-size: 44px;
+    }
+    .lock-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+    .btn {
+      background: linear-gradient(to bottom, #000099, #000066);
+      color: #fff; border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px 16px; border-radius: 10px; cursor: pointer;
+    }
+    .btn:hover { background: #D4AF37; color: #000; }
+
+    @media (max-width: 768px) {
+      .top-buttons { flex-direction: column; left: 10px; top: 10px; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Back & Home Buttons -->
   <div class="top-buttons">
     <button onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
-    <a href="index.php"><i class="fas fa-home"></i> Home</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
   </div>
 
   <!-- Main Grid -->
   <div class="overlay">
-    <h1>List Of Companies</h1>
+    <h1>Select a Company to View Data Room</h1>
 
     <div class="grid-container">
-      <a class="company-card" href="company_dashboard.php?name=Company 1">Company 1</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 2">Company 2</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 3">Company 3</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 4">Company 4</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 5">Company 5</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 6">Company 6</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 7">Company 7</a>
-
-      <a class="company-card" href="company_dashboard.php?name=Company 8">Company 8</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 9">Company 9</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 10">Company 10</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 11">Company 11</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 12">Company 12</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 13">Company 13</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 14">Company 14</a>
-
-      <a class="company-card" href="company_dashboard.php?name=Company 15">Company 15</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 16">Company 16</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 17">Company 17</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 18">Company 18</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 19">Company 19</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 20">Company 20</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 21">Company 21</a>
+      <a class="company-card" href="data_room_company.html?name=Company 1">Company 1</a>
+      <a class="company-card" href="data_room_company.html?name=Company 2">Company 2</a>
+      <a class="company-card" href="data_room_company.html?name=Company 3">Company 3</a>
+      <a class="company-card" href="data_room_company.html?name=Company 4">Company 4</a>
+      <a class="company-card" href="data_room_company.html?name=Company 5">Company 5</a>
+      <a class="company-card" href="data_room_company.html?name=Company 6">Company 6</a>
       
-      <a class="company-card" href="company_dashboard.php?name=Company 21">Company 22</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 21">Company 23</a>
-      <a class="company-card" href="company_dashboard.php?name=Company 21">Company 24</a>
+      <a class="company-card" href="data_room_company.php?name=Company 7">Company 7</a>
+      <a class="company-card" href="data_room_company.php?name=Company 8">Company 8</a>
+      <a class="company-card" href="data_room_company.php?name=Company 9">Company 9</a>
+      <a class="company-card" href="data_room_company.php?name=Company 10">Company 10</a>
+      <a class="company-card" href="data_room_company.php?name=Company 11">Company 11</a>
+      <a class="company-card" href="data_room_company.php?name=Company 12">Company 12</a>
+      
+      <a class="company-card" href="data_room_company.php?name=Company 13">Company 13</a>
+      <a class="company-card" href="data_room_company.php?name=Company 14">Company 14</a>
+      <a class="company-card" href="data_room_company.php?name=Company 15">Company 15</a>
+      <a class="company-card" href="data_room_company.php?name=Company 16">Company 16</a>
+      <a class="company-card" href="data_room_company.php?name=Company 17">Company 17</a>
+      <a class="company-card" href="data_room_company.php?name=Company 18">Company 18</a>
+      
+      <a class="company-card" href="data_room_company.php?name=Company 19">Company 19</a>
+      <a class="company-card" href="data_room_company.php?name=Company 20">Company 20</a>
+      <a class="company-card" href="data_room_company.php?name=Company 21">Company 21</a>
+      <a class="company-card" href="data_room_company.php?name=Company 21">Company 22</a>
+      <a class="company-card" href="data_room_company.php?name=Company 21">Company 23</a>
+      <a class="company-card" href="data_room_company.php?name=Company 21">Company 24</a>
     </div>
   </div>
 

@@ -40,13 +40,13 @@
       transition: background 0.3s;
     }
     .sidebar button:hover {
-      background: white;
+      background: #D4AF37;
       color: #000;
     }
 
     /* Content wrapper */
     .content-wrapper {
-      margin-left: 240px; /* push away from sidebar */
+      margin-left: 240px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -107,30 +107,52 @@
     h2 { font-size: 28px; }
 
     h1 {
-      cursor: pointer; /* finger pointer on hover */
+      cursor: pointer;
     }
 
     /* Calendar */
     .calendar-box {
       margin-bottom: 40px;
-      overflow-x: auto; /* prevent sidebar overlap */
+      overflow-x: auto;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .calendar-header button {
+      background: #050808;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .calendar-header button:hover {
+      background: #D4AF37;
+      color: #000;
     }
     #calendarTable {
       width: 100%;
       border-collapse: collapse;
       text-align: center;
-      table-layout: fixed; /* keeps inside wrapper */
+      table-layout: fixed;
     }
     #calendarTable th, #calendarTable td {
       padding: 10px;
       border: 1px solid rgba(255,255,255,0.2);
-      word-wrap: break-word;
+      cursor: pointer;
     }
     #calendarTable td.today {
       background: #FFD700;
       color: #000;
       font-weight: bold;
       border-radius: 6px;
+    }
+    #calendarTable td:hover {
+      background: rgba(212,175,55,0.3);
     }
 
     /* Event list */
@@ -181,7 +203,11 @@
 
     <div class="overlay">
       <div class="calendar-box">
-        <h3 id="calendarTitle">Calendar</h3>
+        <div class="calendar-header">
+          <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+          <h3 id="calendarTitle">Calendar</h3>
+          <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
         <table id="calendarTable">
           <thead>
             <tr>
@@ -193,69 +219,115 @@
         </table>
       </div>
 
-      <h1 onclick="toggleEvents()"><i class="fas fa-calendar-alt"></i> Programme Events</h1>
-
-      <div id="eventList" style="display: none;">
-        <div class="event-box">
-          <h3>Quarterly Strategy Meeting</h3>
-          <p class="date">10 June 2025 • 10:00 AM</p>
-          <p>Review of KPIs, goals, and performance alignment across units.</p>
-        </div>
-
-        <div class="event-box">
-          <h3>Product Launch</h3>
-          <p class="date">24 June 2025 • 2:00 PM</p>
-          <p>Live unveiling of the platform upgrade and digital services.</p>
-        </div>
-
-        <div class="event-box">
-          <h3>Audit & Compliance Review</h3>
-          <p class="date">30 July 2025 • 11:30 AM</p>
-          <p>Pre-audit planning and documentation session for regulatory review.</p>
-        </div>
-      </div>
+      <h1><i class="fas fa-calendar-alt"></i> Programme Events</h1>
+      <div id="eventList"></div>
     </div>
   </div>
 
   <script>
-    function toggleEvents() {
-      const list = document.getElementById('eventList');
-      list.style.display = list.style.display === 'none' ? 'block' : 'none';
-    }
+    // Events mapped to dates
+    const events = {
+      "2025-06-10": {
+        title: "Quarterly Strategy Meeting",
+        time: "10:00 AM",
+        desc: "Review of KPIs, goals, and performance alignment across units."
+      },
+      "2025-06-24": {
+        title: "Product Launch",
+        time: "2:00 PM",
+        desc: "Live unveiling of the platform upgrade and digital services."
+      },
+      "2025-07-30": {
+        title: "Audit & Compliance Review",
+        time: "11:30 AM",
+        desc: "Pre-audit planning and documentation session for regulatory review."
+      }
+    };
 
-    // Dynamic Calendar Script
-    const now = new Date();
-    const month = now.getMonth();
-    const year = now.getFullYear();
-    const today = now.getDate();
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let currentDate = new Date();
     const monthNames = [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
 
-    document.getElementById("calendarTitle").innerText = `${monthNames[month]} ${year}`;
+    function renderCalendar(date) {
+      const month = date.getMonth();
+      const year = date.getFullYear();
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    const tbody = document.querySelector("#calendarTable tbody");
-    let row = document.createElement('tr');
+      document.getElementById("calendarTitle").innerText = `${monthNames[month]} ${year}`;
 
-    for (let i = 0; i < firstDay; i++) {
-      row.innerHTML += "<td></td>";
+      const tbody = document.querySelector("#calendarTable tbody");
+      tbody.innerHTML = "";
+      let row = document.createElement("tr");
+
+      for (let i = 0; i < firstDay; i++) {
+        row.innerHTML += "<td></td>";
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("td");
+        cell.innerText = day;
+
+        // highlight today
+        const today = new Date();
+        if (
+          day === today.getDate() &&
+          month === today.getMonth() &&
+          year === today.getFullYear()
+        ) {
+          cell.classList.add("today");
+        }
+
+        // event key
+        const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        if (events[key]) {
+          cell.style.color = "#FFD700";
+          cell.style.fontWeight = "bold";
+        }
+
+        cell.onclick = () => showEventsForDate(key, day, month, year);
+
+        row.appendChild(cell);
+        if ((firstDay + day) % 7 === 0 || day === daysInMonth) {
+          tbody.appendChild(row);
+          row = document.createElement("tr");
+        }
+      }
     }
 
-    for (let day = 1; day <= daysInMonth; day++) {
-      const cell = document.createElement("td");
-      cell.innerText = day;
-      if (day === today) {
-        cell.classList.add("today");
-      }
-      row.appendChild(cell);
-      if ((firstDay + day) % 7 === 0 || day === daysInMonth) {
-        tbody.appendChild(row);
-        row = document.createElement("tr");
+    function changeMonth(step) {
+      currentDate.setMonth(currentDate.getMonth() + step);
+      renderCalendar(currentDate);
+    }
+
+    function showEventsForDate(key, day, month, year) {
+      const container = document.getElementById("eventList");
+      container.innerHTML = "";
+
+      if (events[key]) {
+        const e = events[key];
+        container.innerHTML = `
+          <div class="event-box">
+            <h3>${e.title}</h3>
+            <p class="date">${day} ${monthNames[month]} ${year} • ${e.time}</p>
+            <p>${e.desc}</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="event-box">
+            <h3>No Events</h3>
+            <p class="date">${day} ${monthNames[month]} ${year}</p>
+            <p>There are no scheduled events for this date.</p>
+          </div>
+        `;
       }
     }
+
+    // Initial render
+    renderCalendar(currentDate);
   </script>
 
 </body>
